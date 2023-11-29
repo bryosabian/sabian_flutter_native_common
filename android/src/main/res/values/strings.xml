@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="please_accept_all_permissions">Please accept all permissions</string>
+    <string name="loading">Loading</string>
+    <string name="please_wait">Please wait</string>
+</resources>
