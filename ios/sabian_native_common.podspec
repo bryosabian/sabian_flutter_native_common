@@ -15,6 +15,19 @@ Common native utils
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
+  
+  s.dependency 'YPImagePicker'
+  s.dependency 'SPPermissions/Camera'
+  s.dependency 'SPPermissions/PhotoLibrary'
+  s.dependency 'SPPermissions/Siri'
+  s.dependency 'SPPermissions/Health'
+  s.dependency 'SPPermissions/Notification'
+  s.dependency 'PermissionsKit/CameraPermission'
+  s.dependency 'PermissionsKit/PhotoLibraryPermission'
+  s.dependency 'PermissionsKit/SiriPermission'
+  s.dependency 'PermissionsKit/HealthPermission'
+  s.dependency 'PermissionsKit/NotificationPermission'
+  
   s.platform = :ios, '11.0'
 
   # Flutter.framework does not contain a i386 slice.

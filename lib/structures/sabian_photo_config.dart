@@ -10,9 +10,14 @@ class PhotoConfig {
   int galleryMaximumPhotos = 5;
   bool galleryShowCamera = false;
   bool galleryAllowMultiple = true;
+  String? cameraTitle;
   String? galleryToolBarTitle;
   String? galleryPrimaryColor;
   String? galleryPrimaryDarkColor;
+  String? galleryLibraryTitle;
+  String? galleryAlbumsTitle;
+  bool? allowEditing = false;
+
 
   Map<String, dynamic> toMap() => _$PhotoConfigToJson(this);
 

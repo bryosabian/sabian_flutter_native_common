@@ -9,5 +9,4 @@ class ExampleChannelMethodHandler : IMethodChannelHandler {
     override fun execute(payload: MethodChannelPayload) {
         payload.result.success("Android ${android.os.Build.VERSION.RELEASE}")
     }
-
 }

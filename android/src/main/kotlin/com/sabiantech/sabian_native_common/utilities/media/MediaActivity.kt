@@ -123,7 +123,7 @@ abstract class MediaActivity : FlutterActivity() {
 
             val builder = ImagePicker.create(this)
                     .folderMode(true) // folder mode (false by default)
-                    .toolbarFolderTitle(config?.galleryAlbumName
+                    .toolbarFolderTitle(config?.galleryToolBarTitle
                             ?: "Attach Photos") // folder selection title
                     .toolbarImageTitle(config?.galleryToolBarTitle
                             ?: "Select Photo") // image selection title

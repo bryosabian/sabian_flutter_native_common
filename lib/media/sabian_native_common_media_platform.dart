@@ -8,6 +8,7 @@ import '../structures/sabian_media_response_payload.dart';
 
 class SabianNativeCommonMediaPlatform extends SabianAbstractPlatform
     with SabianWithEventsMixIn {
+
   static final Object _token = Object();
 
   static SabianNativeCommonMediaPlatform? _instance;

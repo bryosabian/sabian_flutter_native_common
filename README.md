@@ -13,29 +13,33 @@ focus on the tasks at hand
 
 final _platform = SabianNativeCommon();
 
-void _takePicture() {
+void _takePicture(BuildContext context) {
   _platform.media.takePicture().then((payload) {
-    setCurrentImage(payload.images!.first);
+    _setCurrentImage(payload.images!.first);
     print("Success");
   }).onError((error, stackTrace) {
     print("Error $error");
   });
 }
 
-void _choosePicture() {
-  final config = PhotoConfig();
-  config.galleryAlbumName = "Flutter Library";
-  config.galleryToolBarTitle = "Select Flutter Library";
-  config.galleryMaximumPhotos = 5;
+void _choosePicture(BuildContext context) {
+  final config = PhotoConfig()
+    ..galleryAlbumName = "Flutter Album"
+    ..galleryToolBarTitle = "Choose Photo"
+    ..galleryAlbumsTitle = "All Flutter Albums"
+    ..cameraTitle = "Take Picture"
+    ..allowEditing = true
+    ..galleryMaximumPhotos = 3;
+
   _platform.media.choosePicture(config: config).then((payload) {
-    setCurrentImage(payload.images!.first);
+    _setCurrentImage(payload.images!.first);
     print("Success");
   }).onError((error, stackTrace) {
     print("Error $error");
   });
 }
 
-void _notify() {
+void _notify(BuildContext context) {
   final config = NotificationConfig()
     ..title = "Flutter Notification"
     ..message = "This is a message from the flutter desk. Watch yourself"
@@ -45,6 +49,12 @@ void _notify() {
     print("Success");
   }).onError((error, stackTrace) {
     print("Error $error");
+  });
+}
+
+void _setCurrentImage(Uint8List bytes) {
+  setState(() {
+    memoryImage = MemoryImage(bytes);
   });
 }
 ```
@@ -112,7 +122,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -186,10 +195,14 @@ class _HomeState extends State<Home> {
   }
 
   void _choosePicture(BuildContext context) {
-    final config = PhotoConfig();
-    config.galleryAlbumName = "Flutter Library";
-    config.galleryToolBarTitle = "Select Flutter Library";
-    config.galleryMaximumPhotos = 5;
+    final config = PhotoConfig()
+      ..galleryAlbumName = "Flutter Album"
+      ..galleryToolBarTitle = "Choose Photo"
+      ..galleryAlbumsTitle = "All Flutter Albums"
+      ..cameraTitle = "Take Picture"
+      ..allowEditing = true
+      ..galleryMaximumPhotos = 3;
+
     _platform.media.choosePicture(config: config).then((payload) {
       setCurrentImage(payload.images!.first);
       SabianToast("Success ${payload.status}", SabianToastType.success)
@@ -299,9 +312,54 @@ import com.sabiantech.sabian_native_common.utilities.media.MediaActivity
 class MainActivity : MediaActivity()
 ```
 
-Build the project. You are all set for Android
+Build the flutter project. You are all set for Android
 
-### IOS
+# IOS
 
-Coming soon
+### Dependencies
+Open the Podfile under the ios folder of your root project and add the following requirement dependencies under the target 'Runner' dependencies
+
+``` pod
+pod 'PermissionsKit/CameraPermission', :git => 'https://github.com/sparrowcode/PermissionsKit'
+pod 'PermissionsKit/PhotoLibraryPermission', :git => 'https://github.com/sparrowcode/PermissionsKit'
+pod 'PermissionsKit/NotificationPermission', :git => 'https://github.com/sparrowcode/PermissionsKit'
+```
+
+e.g
+
+``` pod
+target 'Runner' do
+use_frameworks!
+use_modular_headers!
+flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+pod 'PermissionsKit/CameraPermission', :git => 'https://github.com/sparrowcode/PermissionsKit'
+pod 'PermissionsKit/PhotoLibraryPermission', :git => 'https://github.com/sparrowcode/PermissionsKit'
+pod 'PermissionsKit/NotificationPermission', :git => 'https://github.com/sparrowcode/PermissionsKit'
+```
+
+Remember to only include the permissions you need
+
+
+### Register permissions
+Developing for IOS requires you give a description of how you intend to use certain permissions in your application
+In order to use the needed/required permissions, do the following
+
+Open Xcode and edit the info.plist file inside the ios folder and add the following keys with their values.
+The value will correspond to the description on how you intent to use the corresponding permission:
+
+```plist
+Privacy - Camera Usage Description
+Privacy - Photo Library Usage Description
+Privacy - Media Library Usage Description
+```
+
+Close xcode and build the flutter project
+
+You're all set for IOS
+
+# Screens
+
+![alt text](https://github.com/bryosabian/sabian_flutter_native_common/assets/16384340/3bfcfcc6-2627-4383-9bfa-619697d06193)
+
+![alt text](https://github.com/bryosabian/sabian_flutter_native_common/assets/16384340/b005e726-f87b-44eb-8ee1-09932046af2b)
 

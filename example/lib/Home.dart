@@ -58,7 +58,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -132,10 +131,14 @@ class _HomeState extends State<Home> {
   }
 
   void _choosePicture(BuildContext context) {
-    final config = PhotoConfig();
-    config.galleryAlbumName = "Flutter Library";
-    config.galleryToolBarTitle = "Select Flutter Library";
-    config.galleryMaximumPhotos = 5;
+    final config = PhotoConfig()
+      ..galleryAlbumName = "Flutter Album"
+      ..galleryToolBarTitle = "Choose Photo"
+      ..galleryAlbumsTitle = "All Flutter Albums"
+      ..cameraTitle = "Take Picture"
+      ..allowEditing = true
+      ..galleryMaximumPhotos = 3;
+
     _platform.media.choosePicture(config: config).then((payload) {
       setCurrentImage(payload.images!.first);
       SabianToast("Success ${payload.status}", SabianToastType.success)

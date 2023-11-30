@@ -2,18 +2,10 @@ import Flutter
 import UIKit
 
 public class SabianNativeCommonPlugin: NSObject, FlutterPlugin {
+    
+  private static let manager = ChannelManager()
+    
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "sabian_native_common", binaryMessenger: registrar.messenger())
-    let instance = SabianNativeCommonPlugin()
-    registrar.addMethodCallDelegate(instance, channel: channel)
-  }
-
-  public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    switch call.method {
-    case "getPlatformVersion":
-      result("iOS " + UIDevice.current.systemVersion)
-    default:
-      result(FlutterMethodNotImplemented)
-    }
+      manager.configure(payload: ChannelPayload(messengaer: registrar.messenger()))
   }
 }
