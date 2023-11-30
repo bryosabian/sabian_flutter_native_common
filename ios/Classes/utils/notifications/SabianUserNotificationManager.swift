@@ -6,36 +6,17 @@
 import Foundation
 import SPPermissions
 
-protocol SabianUserNotificationsManagerDelegate : AnyObject {
-    func onGranted()
-    func onDenied(error : Error?)
-    func onSettingsLoaded(settings : UNNotificationSettings, manager : SabianUserNotificationsManager)
-    func onLoadingSettings()
-}
-extension SabianUserNotificationsManagerDelegate {
-    func onGranted(){
-        
-    }
-    func onDenied(error : Error?){
-        
-    }
-    func onSettingsLoaded(settings : UNNotificationSettings, manager : SabianUserNotificationsManager){
-        
-    }
-    func onLoadingSettings(){
-        
-    }
-}
-
 class SabianUserNotificationsManager: NSObject {
     
     static let NOTIFICATION_SCHEDULE_LIMIT : Int = 64
     
-    private weak var delegate : SabianUserNotificationsManagerDelegate? = nil
+    
     private var center : UNUserNotificationCenter!
     private var categories : [UNNotificationCategory] = [UNNotificationCategory]()
     
     private var notificationActions : Dictionary<String,()->Void> = Dictionary<String,()->Void>()
+    
+    weak var delegate : SabianUserNotificationsManagerDelegate? = nil
     
     var settings : UNNotificationSettings? = nil
     var isReady : Bool = false
@@ -44,12 +25,10 @@ class SabianUserNotificationsManager: NSObject {
     var foreGroundOptions : UNNotificationPresentationOptions = [.alert,.sound]
     
     init(delegate : SabianUserNotificationsManagerDelegate? = nil){
-        
         super.init()
         self.delegate = delegate
         center = UNUserNotificationCenter.current()
         center.delegate = self
-        
         if #available(iOS 14.0, *) {
             self.foreGroundOptions.insert(.banner)
         }
@@ -112,11 +91,9 @@ class SabianUserNotificationsManager: NSObject {
     
     func notify(body : NotificationContent, triggerAfterSeconds : TimeInterval = 1, onError : ((Error) -> Void)? = nil){
         
-        
-        
         if(!self.canNotify()){
             if let onE = onError {
-                onE(SabianException("Please approve notification settings".localize()))
+                onE(SabianException("Please approve notification permissions".localize()))
             }
             return
         }
@@ -145,16 +122,13 @@ class SabianUserNotificationsManager: NSObject {
             }
         }
         
-        
     }
     
     func scehdule(dateComponents : DateComponents, body : NotificationContent, repeats : Bool = true, onError : ((Error) -> Void)? = nil){
         
-        
-        
         if(!self.canNotify()){
             if let onE = onError {
-                onE(SabianException("Please approve notification settings".localize()))
+                onE(SabianException("Please approve notification permissions".localize()))
             }
             return
         }
@@ -206,9 +180,6 @@ class SabianUserNotificationsManager: NSObject {
     func registerAction(_ key : String, action : @escaping ()->Void){
         self.notificationActions[key] = action
     }
-    
-    
-    
 }
 
 
@@ -229,11 +200,7 @@ extension SabianUserNotificationsManager : UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler(self.foreGroundOptions)
     }
-    
-    
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        
-        print("Action \(response.actionIdentifier)")
         
         if let action = self.notificationActions[response.actionIdentifier]{
             action()

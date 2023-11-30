@@ -12,7 +12,6 @@ import SPPermissions
 enum SabianPermissionsType {
     case notification
     case photoLibrary
-    case siri
     case camera
     case unknown
     
@@ -24,12 +23,30 @@ enum SabianPermissionsType {
             return .notification
         case .photoLibrary:
             return .photoLibrary
-        case .siri:
-            return .siri
         case .unknown:
             return .init()
         }
     }
     
-    
+    var isGranted : Bool {
+        return self.permission.authorized
+    }
 }
+
+extension SPPermissions.Permission {
+    var sabianType : SabianPermissionsType {
+        get{
+            switch self {
+            case .camera:
+                return .camera
+            case .notification:
+                return .notification
+            case .photoLibrary:
+                return .photoLibrary
+            default:
+                return .unknown
+            }
+        }
+    }
+}
+

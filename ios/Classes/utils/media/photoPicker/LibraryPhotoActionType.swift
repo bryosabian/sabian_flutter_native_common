@@ -42,10 +42,9 @@ class LibraryPhotoActionType : IPhotoActionType {
                     photos.append(photo.image)
                     
                 default:
-                    print("Fuck you apple")
-                //Do nothing. Fuck you Apple!!
-                }
+                    print("No photo type found")
                 
+                }
                 
             }
             if photos.count > 0 {
@@ -93,13 +92,17 @@ extension SabianPhotoPickerScreenType {
         config.albumName = pickerConfig.wordings.albumName
         
         
-        if let color = pickerConfig.theme.primaryColor {
-            config.colors.tintColor = color
-            config.colors.positionLineColor = color
-            config.colors.albumTitleColor = color
-            config.colors.albumTintColor = color
-            config.colors.navigationBarActivityIndicatorColor = color
+        var primary : UIColor = UIColor.systemBlue
+        
+        if let mColor = pickerConfig.theme.primaryColor {
+            primary = mColor
         }
+        
+        config.colors.tintColor = primary
+        config.colors.positionLineColor = primary
+        config.colors.albumTitleColor = primary
+        config.colors.albumTintColor = primary
+        config.colors.navigationBarActivityIndicatorColor = primary
         
         return config
         

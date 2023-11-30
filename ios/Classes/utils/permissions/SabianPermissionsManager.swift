@@ -8,26 +8,6 @@
 import Foundation
 import SPPermissions
 
-fileprivate extension SPPermissions.Permission {
-    var mType : SabianPermissionsType {
-        get{
-            switch self {
-            case .camera:
-                return .camera
-            case .notification:
-                return .notification
-            case .photoLibrary:
-                return .photoLibrary
-            case .siri:
-                return .siri
-            default:
-                return .unknown
-            }
-        }
-    }
-}
-
-
 
 
 class SabianPermissionsManager {
@@ -126,7 +106,6 @@ class SabianPermissionsManager {
             }
             self.list = nil
         }
-        
         list = SPPermissions.list(self._permissions)
         list?.dismissCondition = .allPermissionsDeterminated
         list?.delegate = self
@@ -139,12 +118,12 @@ class SabianPermissionsManager {
 
 extension SabianPermissionsManager : SPPermissionsDelegate {
     func didHidePermissions(_ permissions: [SPPermissions.Permission]) {
-        delegate?.onFinished(permissions: permissions.map{ return $0.mType })
+        delegate?.onFinished(permissions: permissions.map{ return $0.sabianType })
     }
     func didAllowPermission(_ permission: SPPermissions.Permission) {
-        delegate?.onAllowed(permission: permission.mType)
+        delegate?.onAllowed(permission: permission.sabianType)
     }
     func didDeniedPermission(_ permission: SPPermissions.Permission) {
-        delegate?.onDenied(permission: permission.mType)
+        delegate?.onDenied(permission: permission.sabianType)
     }
 }

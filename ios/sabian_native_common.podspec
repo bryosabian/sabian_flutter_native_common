@@ -5,13 +5,13 @@
 Pod::Spec.new do |s|
   s.name             = 'sabian_native_common'
   s.version          = '0.0.1'
-  s.summary          = 'Common native utils'
+  s.summary          = 'Handle common native tasks for Android and IOS'
   s.description      = <<-DESC
-Common native utils
+  Flutter plugin that handles common native tasks for Android and IOS
                        DESC
-  s.homepage         = 'http://example.com'
+  s.homepage         = 'https://github.com/bryosabian/sabian_flutter_native_common'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.author           = { 'Sabian Technologies' => 'sabianbryococ@gmail.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
@@ -19,14 +19,7 @@ Common native utils
   s.dependency 'YPImagePicker'
   s.dependency 'SPPermissions/Camera'
   s.dependency 'SPPermissions/PhotoLibrary'
-  s.dependency 'SPPermissions/Siri'
-  s.dependency 'SPPermissions/Health'
   s.dependency 'SPPermissions/Notification'
-  s.dependency 'PermissionsKit/CameraPermission'
-  s.dependency 'PermissionsKit/PhotoLibraryPermission'
-  s.dependency 'PermissionsKit/SiriPermission'
-  s.dependency 'PermissionsKit/HealthPermission'
-  s.dependency 'PermissionsKit/NotificationPermission'
   
   s.platform = :ios, '11.0'
 

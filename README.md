@@ -316,38 +316,14 @@ Build the flutter project. You are all set for Android
 
 # IOS
 
-### Dependencies
-Open the Podfile under the ios folder of your root project and add the following requirement dependencies under the target 'Runner' dependencies
-
-``` pod
-pod 'PermissionsKit/CameraPermission', :git => 'https://github.com/sparrowcode/PermissionsKit'
-pod 'PermissionsKit/PhotoLibraryPermission', :git => 'https://github.com/sparrowcode/PermissionsKit'
-pod 'PermissionsKit/NotificationPermission', :git => 'https://github.com/sparrowcode/PermissionsKit'
-```
-
-e.g
-
-``` pod
-target 'Runner' do
-use_frameworks!
-use_modular_headers!
-flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
-pod 'PermissionsKit/CameraPermission', :git => 'https://github.com/sparrowcode/PermissionsKit'
-pod 'PermissionsKit/PhotoLibraryPermission', :git => 'https://github.com/sparrowcode/PermissionsKit'
-pod 'PermissionsKit/NotificationPermission', :git => 'https://github.com/sparrowcode/PermissionsKit'
-```
-
-Remember to only include the permissions you need
-
-
 ### Register permissions
 Developing for IOS requires you give a description of how you intend to use certain permissions in your application
 In order to use the needed/required permissions, do the following
 
 Open Xcode and edit the info.plist file inside the ios folder and add the following keys with their values.
-The value will correspond to the description on how you intent to use the corresponding permission:
+The value will correspond to the description on how you intend to use the corresponding permission:
 
-```plist
+```text
 Privacy - Camera Usage Description
 Privacy - Photo Library Usage Description
 Privacy - Media Library Usage Description

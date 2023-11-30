@@ -8,25 +8,9 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - PermissionsKit/CameraPermission (10.0.1):
-    - PermissionsKit/Core
-  - PermissionsKit/Core (10.0.1)
-  - PermissionsKit/HealthPermission (10.0.1):
-    - PermissionsKit/Core
-  - PermissionsKit/NotificationPermission (10.0.1):
-    - PermissionsKit/Core
-  - PermissionsKit/PhotoLibraryPermission (10.0.1):
-    - PermissionsKit/Core
-  - PermissionsKit/SiriPermission (10.0.1):
-    - PermissionsKit/Core
   - PryntTrimmerView (4.0.2)
   - sabian_native_common (0.0.1):
     - Flutter
-    - PermissionsKit/CameraPermission
-    - PermissionsKit/HealthPermission
-    - PermissionsKit/NotificationPermission
-    - PermissionsKit/PhotoLibraryPermission
-    - PermissionsKit/SiriPermission
     - SPPermissions/Camera
     - SPPermissions/Health
     - SPPermissions/Notification
@@ -56,11 +40,6 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
-  - PermissionsKit/CameraPermission (from `https://github.com/sparrowcode/PermissionsKit`)
-  - PermissionsKit/HealthPermission (from `https://github.com/sparrowcode/PermissionsKit`)
-  - PermissionsKit/NotificationPermission (from `https://github.com/sparrowcode/PermissionsKit`)
-  - PermissionsKit/PhotoLibraryPermission (from `https://github.com/sparrowcode/PermissionsKit`)
-  - PermissionsKit/SiriPermission (from `https://github.com/sparrowcode/PermissionsKit`)
   - sabian_native_common (from `.symlinks/plugins/sabian_native_common/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
 
@@ -79,31 +58,23 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
-  PermissionsKit:
-    :git: https://github.com/sparrowcode/PermissionsKit
   sabian_native_common:
     :path: ".symlinks/plugins/sabian_native_common/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
-
-CHECKOUT OPTIONS:
-  PermissionsKit:
-    :commit: 500041ad642512fb9ec88c5715c9530d7568e3d7
-    :git: https://github.com/sparrowcode/PermissionsKit
 
 SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   integration_test: 13825b8a9334a850581300559b8839134b124670
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
-  PermissionsKit: 4120f832cb9dca68471e7b41700b09358ed8311b
   PryntTrimmerView: 6a43cc90df5d99addeabd33d4ba09b1365322130
-  sabian_native_common: 19dbb4902f790eb0882a5ffe18b7dffc0c6c8d7e
+  sabian_native_common: 18eb8ad094268266a6ca79f360e25c1b007ac170
   SPPermissions: c63ac1132badad39917de03a3c9dc2429ace94be
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
   YPImagePicker: 6f410f475bd22fa8cd430495b54d4b2f15865c2d
 
-PODFILE CHECKSUM: 80b6f1d3ffbf83dd2016af7385c0b17816b085a5
+PODFILE CHECKSUM: 71f7ceb0a8a1628a1115b2d8b157a4927b0a9dbb
 
 COCOAPODS: 1.14.3
