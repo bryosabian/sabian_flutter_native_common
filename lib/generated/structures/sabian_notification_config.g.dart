@@ -8,6 +8,7 @@ part of '../../structures/sabian_notification_config.dart';
 
 NotificationConfig _$NotificationConfigFromJson(Map<String, dynamic> json) =>
     NotificationConfig()
+      ..canProcessPermissions = json['canProcessPermissions'] as bool?
       ..title = json['title'] as String?
       ..message = json['message'] as String?
       ..actions =
@@ -22,6 +23,7 @@ NotificationConfig _$NotificationConfigFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$NotificationConfigToJson(NotificationConfig instance) =>
     <String, dynamic>{
+      'canProcessPermissions': instance.canProcessPermissions,
       'title': instance.title,
       'message': instance.message,
       'actions': instance.actions,

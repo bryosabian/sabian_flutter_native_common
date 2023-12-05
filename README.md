@@ -31,7 +31,7 @@ void _choosePicture(BuildContext context) {
     ..allowEditing = true
     ..galleryMaximumPhotos = 3;
 
-  _platform.media.choosePicture(config: config).then((payload) {
+  _platform.media.choosePicture(config).then((payload) {
     _setCurrentImage(payload.images!.first);
     print("Success");
   }).onError((error, stackTrace) {
@@ -203,7 +203,7 @@ class _HomeState extends State<Home> {
       ..allowEditing = true
       ..galleryMaximumPhotos = 3;
 
-    _platform.media.choosePicture(config: config).then((payload) {
+    _platform.media.choosePicture(config).then((payload) {
       setCurrentImage(payload.images!.first);
       SabianToast("Success ${payload.status}", SabianToastType.success)
           .show(context);
@@ -253,7 +253,11 @@ sabian_native_common:
 
 ### Android Manifest 
 
-Under the android/app/src/main open AndroidManifest.xml and add the following that will be used for the necessary permissions and provider paths for any native related tasks
+#### Permissions
+
+Under the android/app/src/main open AndroidManifest.xml and add the following that will be used for the necessary permissions for any native related tasks
+
+Remember to only include the permissions you need 
 
 ```xml
 
@@ -271,20 +275,14 @@ Under the android/app/src/main open AndroidManifest.xml and add the following th
 <application android:name="${applicationName}" android:icon="@mipmap/ic_launcher"
 android:label="sabian_native_common_example">
 
-<provider android:name="androidx.core.content.FileProvider"
-    android:authorities="${applicationId}.provider"
 
-    android:grantUriPermissions="true">
-    <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
-        android:resource="@xml/provider_paths" />
-</provider>
 <!--...... the rest goes here -->
 </application>
 ```
 
 ### Add xml/provider_paths.xml
 
-If you don't need to use picture or any media related activity, ignore this.
+If you don't need to use picture or any media related activity, ignore the following 2 instructions.
 
 Otherwise, under the android/app/src/main/res folder create 'xml' folder. Under which, create
 provider_paths.xml and add the following:
@@ -296,13 +294,31 @@ provider_paths.xml and add the following:
 </paths>
 ```
 
+Afterwards, under the android/app/src/main, open AndroidManifest.xml and add the following provider path xml code under the <application> tag as shown
+```xml
+<application android:name="${applicationName}" android:icon="@mipmap/ic_launcher"
+    android:label="sabian_native_common_example">
+  <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+    <!--...... the rest goes here -->
+</application>
+```
+
 ### MainActivity
 
 If you don't need to use picture or any media related activity, ignore this.
 
 Otherwise, before editing the main activity, build the project.
 
-After building, open MainActivity and extend MediaActivity as shown
+After building, under the android/app/src/main/kotlin/your_package_directory folder, open MainActivity and extend MediaActivity as shown
 
 ```kotlin
 package com.sabiantech.sabian_native_common_example
@@ -317,7 +333,69 @@ Build the flutter project. You are all set for Android
 # IOS
 
 ### Register permissions
-Developing for IOS requires you give a description of how you intend to use certain permissions in your application
+If you wish the plug in to handle permissions for you, do the following. Otherwise, ignore the following instructions:
+
+#### Import Permission Libraries
+Under the ios folder, open the Podfile and add the following permission handlers under target project
+
+Remember to only include the permissions you need otherwise your app will be flagged by Apple and you may need to explain the need of all those permissions.
+For a list of all supported permissions, see https://cocoapods.org/pods/SPPermissions
+
+```ruby
+pod 'SPPermissions/Camera'
+pod 'SPPermissions/PhotoLibrary'
+pod 'SPPermissions/Notification'
+ ```
+
+e.g
+```ruby
+target 'Runner' do
+  use_frameworks!
+  use_modular_headers!
+
+  flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+  
+  pod 'SPPermissions/Camera'
+  pod 'SPPermissions/PhotoLibrary'
+  pod 'SPPermissions/Notification'
+  
+  #Add all permissions related dependancies here using SPPermissions/
+  #More see https://cocoapods.org/pods/SPPermissions
+  
+  target 'RunnerTests' do
+    inherit! :search_paths
+  end
+end
+
+#rest goes here
+```
+
+#### Library permissions
+Under the sabian_native_common/ios directory, open ios/Classes folder and click SabianNativePermissionsList.swift and uncomment the permissions you need based on the specified permissions above
+e.g
+
+```swift
+import Foundation
+import SPPermissions
+
+class SabianNativePermissionsList {
+    static var permissions : Dictionary<String,SPPermissions.Permission> {
+        var permissions = Dictionary<String,SPPermissions.Permission>()
+        //permissions["Camera"] = SPPermissions.Permission.camera
+        //permissions["Notification"] = SPPermissions.Permission.notification
+        //permissions["Photo Library"] = SPPermissions.Permission.photoLibrary
+        return permissions
+    }
+}
+```
+
+Current supported permissions are
+- Camera
+- Notification
+- PhotoLibrary
+
+#### Describe permissions
+Last but not the least, developing for IOS requires you give a description of how you intend to use certain permissions in your application
 In order to use the needed/required permissions, do the following
 
 Open Xcode and edit the info.plist file inside the ios folder and add the following keys with their values.
@@ -339,3 +417,18 @@ You're all set for IOS
 
 ![alt text](https://github.com/bryosabian/sabian_flutter_native_common/assets/16384340/b005e726-f87b-44eb-8ee1-09932046af2b)
 
+# Scope
+Current supported tasks are
+- Media
+  - Take Picture
+  - Choose from Gallery
+- Notification
+  - Post notifications
+
+More coming soon
+
+# Libraries Used
+- Android Image Picker (Android) : https://github.com/esafirm/android-image-picker
+- Dexter Permissions (Android) : https://github.com/Karumi/Dexter
+- SPPermissions (IOS) : https://cocoapods.org/pods/SPPermissions
+- YPImagePicker (IOS) : https://github.com/Yummypets/YPImagePicker

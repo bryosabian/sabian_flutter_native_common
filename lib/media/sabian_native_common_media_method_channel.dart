@@ -11,10 +11,10 @@ class SabianNativeCommonMediaMethodChannel
   /// The method channel used to interact with the native platform.
   @visibleForTesting
   final methodChannel =
-      const MethodChannel('com.sabian_common_native.methods.media');
+  const MethodChannel('com.sabian_common_native.methods.media');
 
   @override
-  Future<SabianMediaResponsePayload> takePicture({PhotoConfig? config}) async {
+  Future<SabianMediaResponsePayload> takePicture([PhotoConfig? config]) async {
     try {
       dynamic params;
       if (config != null) {
@@ -35,14 +35,14 @@ class SabianNativeCommonMediaMethodChannel
 
   @override
   Future<SabianMediaResponsePayload> choosePicture(
-      {PhotoConfig? config}) async {
+      [PhotoConfig? config]) async {
     dynamic params;
     if (config != null) {
       params = <String, String>{'photoConfig': config.toJson()};
     }
     try {
       final response =
-          await methodChannel.invokeMethod("choosePicture", params);
+      await methodChannel.invokeMethod("choosePicture", params);
       final payload = Map<String, dynamic>.from(response);
       final message = payload["status"] as String;
       final unSerializedData = payload["data"] as List<Object?>;

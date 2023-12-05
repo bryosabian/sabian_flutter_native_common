@@ -11,23 +11,11 @@ PODS:
   - PryntTrimmerView (4.0.2)
   - sabian_native_common (0.0.1):
     - Flutter
-    - SPPermissions/Camera
-    - SPPermissions/Health
-    - SPPermissions/Notification
-    - SPPermissions/PhotoLibrary
-    - SPPermissions/Siri
+    - SPPermissions
     - YPImagePicker
-  - SPPermissions/Camera (7.1.5):
-    - SPPermissions/Core
+  - SPPermissions (7.1.5):
+    - SPPermissions/Core (= 7.1.5)
   - SPPermissions/Core (7.1.5)
-  - SPPermissions/Health (7.1.5):
-    - SPPermissions/Core
-  - SPPermissions/Notification (7.1.5):
-    - SPPermissions/Core
-  - SPPermissions/PhotoLibrary (7.1.5):
-    - SPPermissions/Core
-  - SPPermissions/Siri (7.1.5):
-    - SPPermissions/Core
   - sqflite (0.0.3):
     - Flutter
     - FMDB (>= 2.7.5)
@@ -69,12 +57,12 @@ SPEC CHECKSUMS:
   integration_test: 13825b8a9334a850581300559b8839134b124670
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   PryntTrimmerView: 6a43cc90df5d99addeabd33d4ba09b1365322130
-  sabian_native_common: 18eb8ad094268266a6ca79f360e25c1b007ac170
+  sabian_native_common: ccf79f219a822cfea0de165f368e1dca2ac27dca
   SPPermissions: c63ac1132badad39917de03a3c9dc2429ace94be
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
   YPImagePicker: 6f410f475bd22fa8cd430495b54d4b2f15865c2d
 
-PODFILE CHECKSUM: 71f7ceb0a8a1628a1115b2d8b157a4927b0a9dbb
+PODFILE CHECKSUM: d7f281243f01f29060237bd02000f7b1a46b0142
 
 COCOAPODS: 1.14.3

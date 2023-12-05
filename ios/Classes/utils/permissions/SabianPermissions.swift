@@ -68,8 +68,10 @@ extension SabianPermissions {
             self.rationale = rationale
             self.onProceed = onProceed
             self.onError = onError
-            if rationale.permissions.isEmpty {
-                throw SabianException("No permissions have been passed".localize())
+            let valid = rationale.validPermissions
+            if valid.isEmpty {
+                self.finish(permissions: rationale.permissions)
+                return
             }
             self.processAlreadyAcceptedPermissions()
             if(self.accepted.count == rationale.permissions.count){
@@ -77,7 +79,7 @@ extension SabianPermissions {
                 print("All permissions already accepted")
                 return
             }
-            self.manager?.permissions = self.rationale!.permissions
+            self.manager?.permissions = valid
             self.manager?.show()
         }catch{
             self.onError(error: error)
@@ -153,6 +155,28 @@ extension SabianPermissions {
     }
 }
 
+
+extension SabianPermissions {
+    
+    func proceedIfPhotoPermissionsGranted(
+                          _ onProceed: @escaping (PermissionRationale) -> Void,
+                          onError: ((Error) -> Void)? = nil,  allMandatory: Bool = true){
+                              self.proceedIfGranted(SabianPermissions.photoPermissions, onProceed, onError: onError, allMandatory: allMandatory)
+    }
+    
+    
+    func proceedIfNeededPermissionsGranted(
+                          _ onProceed: @escaping (PermissionRationale) -> Void,
+                          onError: ((Error) -> Void)? = nil,  allMandatory: Bool = true){
+                              self.proceedIfGranted(SabianPermissions.neededPermissions, onProceed, onError: onError, allMandatory: allMandatory)
+    }
+    
+    func proceedIfNotificationPermissionsGranted(
+                          _ onProceed: @escaping (PermissionRationale) -> Void,
+                          onError: ((Error) -> Void)? = nil,  allMandatory: Bool = true){
+                              self.proceedIfGranted(SabianPermissions.notificationPermissions, onProceed, onError: onError, allMandatory: allMandatory)
+    }
+}
 
 extension SabianPermissions : SabianPermissionsManagerDelegate {
     func onFinished(permissions : [SabianPermissionsType]){

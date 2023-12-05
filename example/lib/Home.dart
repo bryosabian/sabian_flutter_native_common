@@ -137,9 +137,10 @@ class _HomeState extends State<Home> {
       ..galleryAlbumsTitle = "All Flutter Albums"
       ..cameraTitle = "Take Picture"
       ..allowEditing = true
+      ..canProcessPermissions = true
       ..galleryMaximumPhotos = 3;
 
-    _platform.media.choosePicture(config: config).then((payload) {
+    _platform.media.choosePicture(config).then((payload) {
       setCurrentImage(payload.images!.first);
       SabianToast("Success ${payload.status}", SabianToastType.success)
           .show(context);

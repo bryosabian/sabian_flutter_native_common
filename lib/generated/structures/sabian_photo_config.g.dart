@@ -7,6 +7,7 @@ part of '../../structures/sabian_photo_config.dart';
 // **************************************************************************
 
 PhotoConfig _$PhotoConfigFromJson(Map<String, dynamic> json) => PhotoConfig()
+  ..canProcessPermissions = json['canProcessPermissions'] as bool?
   ..galleryAlbumName = json['galleryAlbumName'] as String?
   ..galleryMaximumPhotos = json['galleryMaximumPhotos'] as int
   ..galleryShowCamera = json['galleryShowCamera'] as bool
@@ -21,6 +22,7 @@ PhotoConfig _$PhotoConfigFromJson(Map<String, dynamic> json) => PhotoConfig()
 
 Map<String, dynamic> _$PhotoConfigToJson(PhotoConfig instance) =>
     <String, dynamic>{
+      'canProcessPermissions': instance.canProcessPermissions,
       'galleryAlbumName': instance.galleryAlbumName,
       'galleryMaximumPhotos': instance.galleryMaximumPhotos,
       'galleryShowCamera': instance.galleryShowCamera,

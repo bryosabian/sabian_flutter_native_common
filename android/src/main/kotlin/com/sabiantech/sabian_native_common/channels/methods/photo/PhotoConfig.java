@@ -14,6 +14,8 @@ public class PhotoConfig {
 
     public String galleryPrimaryDarkColor;
 
+    public boolean canProcessPermissions = true;
+
     @Override
     public String toString() {
         return "PhotoConfig{" +
@@ -24,6 +26,7 @@ public class PhotoConfig {
                 ", galleryToolBarTitle='" + galleryToolBarTitle + '\'' +
                 ", galleryPrimaryColor='" + galleryPrimaryColor + '\'' +
                 ", galleryPrimaryDarkColor='" + galleryPrimaryDarkColor + '\'' +
+                ", canProcessPermissions=" + canProcessPermissions +
                 '}';
     }
 }

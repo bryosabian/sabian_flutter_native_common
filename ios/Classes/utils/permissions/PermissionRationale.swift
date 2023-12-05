@@ -18,6 +18,14 @@ class PermissionRationale {
        var isAnyDenied: Bool? = nil
        var isAnyDeniedPermanently: Bool? = nil
     
+    var validPermissions : [SabianPermissionsType] {
+        get {
+            return permissions.filter({
+                $0.permission != nil
+            })
+        }
+    }
+    
     init(_ permissions : [SabianPermissionsType]){
         self.permissions = permissions
     }

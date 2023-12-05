@@ -24,7 +24,10 @@ class GalleryMethodChannelHandler : IMethodChannelHandler,SabianPhotoPickerDeleg
         
         self.picker = SabianPhotoPicker(payload.controller!,delegate: self)
         
+        var canProceddPermissions = true
+        
         if let configValue : String = payload.call.argument("photoConfig"),let photoConfig = PhotoConfig(fromJson: configValue) {
+            canProceddPermissions = photoConfig.canProcessPermissions ?? true
             picker!.config = photoConfig.toConfig
             print("Picker config has been set")
         }else{
@@ -34,7 +37,7 @@ class GalleryMethodChannelHandler : IMethodChannelHandler,SabianPhotoPickerDeleg
         picker!.choosePhoto(onError: { error  in
             print("Gallery Error \(error)")
             payload.result(error.toFlutterError)
-        })
+        },processPermissions: canProceddPermissions)
     }
 
 

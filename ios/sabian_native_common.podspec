@@ -17,9 +17,7 @@ Pod::Spec.new do |s|
   s.dependency 'Flutter'
   
   s.dependency 'YPImagePicker'
-  s.dependency 'SPPermissions/Camera'
-  s.dependency 'SPPermissions/PhotoLibrary'
-  s.dependency 'SPPermissions/Notification'
+  s.dependency 'SPPermissions'
   
   s.platform = :ios, '11.0'
 

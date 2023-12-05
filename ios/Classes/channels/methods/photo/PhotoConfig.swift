@@ -25,6 +25,8 @@ struct PhotoConfig : SabianCodable {
     var allowEditing : Bool? = false
     var cameraTitle : String?
     
+    var canProcessPermissions : Bool? = true
+    
     init(){
         
     }
@@ -47,6 +49,7 @@ struct PhotoConfig : SabianCodable {
         galleryPrimaryColor = copy.galleryPrimaryColor
         galleryPrimaryDarkColor = copy.galleryPrimaryDarkColor
         allowEditing = copy.allowEditing
+        canProcessPermissions = copy.canProcessPermissions
         
     }
     
@@ -73,6 +76,8 @@ extension PhotoConfig {
         case galleryPrimaryDarkColor
         
         case allowEditing
+        
+        case canProcessPermissions
         
     }
 }
@@ -120,9 +125,6 @@ extension PhotoConfig {
             if let allowEditing = allowEditing {
                 config.allowEditing = allowEditing
             }
-            
-           
-            
            
             config.theme.primaryColor = galleryPrimaryColor?.toColor
             return config

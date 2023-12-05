@@ -31,37 +31,52 @@ class SabianPhotoPicker {
         actionTypes["library"] = LibraryPhotoActionType()
     }
     
-    func takePhoto(onError : ((Error) -> Void)? = nil){
+    func takePhoto(onError : ((Error) -> Void)? = nil, processPermissions : Bool = true){
         guard let at = actionTypes[self.actionType] else {
             return
         }
-        self.proceedIfPermissionsGranted({ [unowned self] in
-            at.takePicture(context: self.context!, delegate: self.delegate,config: self.config)
+        let proceed = { [unowned self] in
+                at.takePicture(context: self.context!, delegate: self.delegate,config: self.config)
+        }
+        
+        if(!processPermissions){
+            proceed()
+            return
+        }
+        
+        self.proceedIfPermissionsGranted({
+            proceed()
         },onError: onError)
     }
     
-    func choosePhoto(onError : ((Error) -> Void)? = nil){
+    func choosePhoto(onError : ((Error) -> Void)? = nil,processPermissions : Bool = true){
         guard let at = actionTypes[self.actionType] else {
             return
         }
-        self.proceedIfPermissionsGranted({ [unowned self] in
+        let proceed = { [unowned self] in
             at.choosePicture(context: self.context!, delegate: self.delegate,config: self.config)
+        }
+        
+        if(!processPermissions){
+            proceed()
+            return
+        }
+        
+        self.proceedIfPermissionsGranted({
+            proceed()
         },onError:  onError)
         
     }
     
     private func proceedIfPermissionsGranted(_ onProceed : @escaping () -> Void, onError : ((Error) -> Void)? = nil){
-        permissions.proceedIfGranted(SabianPermissions.photoPermissions, { rationale in
-            
+        permissions.proceedIfPhotoPermissionsGranted({ rationale in
             if rationale.isAnyPermissionDenied {
                 if let onE = onError {
                     onE(SabianException("Please accept all permissions".localize()))
                 }
                 return
             }
-            
             onProceed()
-            
         },onError: onError)
     }
 }

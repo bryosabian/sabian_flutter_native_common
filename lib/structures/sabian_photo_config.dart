@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
+import 'package:sabian_native_common/structures/sabian_with_permission.dart';
 
 part '../generated/structures/sabian_photo_config.g.dart';
 
 @JsonSerializable()
-class PhotoConfig {
+class PhotoConfig extends SabianWithPermission {
   String? galleryAlbumName;
   int galleryMaximumPhotos = 5;
   bool galleryShowCamera = false;
@@ -17,7 +18,6 @@ class PhotoConfig {
   String? galleryLibraryTitle;
   String? galleryAlbumsTitle;
   bool? allowEditing = false;
-
 
   Map<String, dynamic> toMap() => _$PhotoConfigToJson(this);
 

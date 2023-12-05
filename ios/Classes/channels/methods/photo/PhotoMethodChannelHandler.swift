@@ -24,14 +24,17 @@ class PhotoMethodChannelHandler : IMethodChannelHandler,SabianPhotoPickerDelegat
         
         self.picker = SabianPhotoPicker(payload.controller!,delegate: self)
         
+        var canProceddPermissions = true
+        
         if let configValue : String = payload.call.argument("photoConfig"),let photoConfig = PhotoConfig(fromJson: configValue) {
+            canProceddPermissions = photoConfig.canProcessPermissions ?? true
             picker!.config = photoConfig.toConfig
         }
         
         picker!.takePhoto(onError: { error in
             print("Photo Error \(error)")
             payload.result(error.toFlutterError)
-        })
+        },processPermissions: canProceddPermissions)
     }
 
 

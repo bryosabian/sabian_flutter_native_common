@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
+import 'package:sabian_native_common/structures/sabian_with_permission.dart';
 
 part '../generated/structures/sabian_notification_config.g.dart';
 
 @JsonSerializable()
-class NotificationConfig {
+class NotificationConfig extends SabianWithPermission {
   String? title;
 
   String? message;

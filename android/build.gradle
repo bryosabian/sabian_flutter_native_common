@@ -7,6 +7,7 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven { url "https://jitpack.io" }
     }
 
     dependencies {
@@ -19,6 +20,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven { url "https://jitpack.io" }
     }
 }
 
@@ -62,8 +64,7 @@ android {
 
         implementation 'joda-time:joda-time:2.10'
         implementation 'com.google.code.gson:gson:2.8.5'
-        //implementation 'com.github.esafirm.android-image-picker:imagepicker:2.4.5'
-        implementation project(':Libs:imagepicker')
+        implementation 'io.github.bryosabian:imagepicker:0.0.1-SNAPSHOT'
 
         //Coroutines
         implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.1'

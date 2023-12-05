@@ -28,11 +28,11 @@ class SabianNativeCommonMediaPlatform extends SabianAbstractPlatform
     _instance = instance;
   }
 
-  Future<SabianMediaResponsePayload> takePicture({PhotoConfig? config}) {
+  Future<SabianMediaResponsePayload> takePicture([PhotoConfig? config]) {
     throw UnimplementedError('takePicture() has not been implemented.');
   }
 
-  Future<SabianMediaResponsePayload> choosePicture({PhotoConfig? config}) {
+  Future<SabianMediaResponsePayload> choosePicture([PhotoConfig? config]) {
     throw UnimplementedError('choosePicture() has not been implemented.');
   }
 }

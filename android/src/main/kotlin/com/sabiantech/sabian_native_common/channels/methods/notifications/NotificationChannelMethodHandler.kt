@@ -6,33 +6,47 @@ import com.sabiantech.sabian_native_common.Config
 import com.sabiantech.sabian_native_common.utilities.notifications.NotificationChannel
 import com.sabiantech.sabian_native_common.utilities.notifications.Notifier
 import com.sabiantech.sabian_native_common.channels.methods.IMethodChannelHandler
+import com.sabiantech.sabian_native_common.channels.methods.MediaChannelHandler
 import com.sabiantech.sabian_native_common.channels.methods.MethodChannelPayload
 import com.sabiantech.sabian_native_common.extensions.fromJSONOrNull
+import com.sabiantech.sabian_native_common.structures.SabianException
 import com.sabiantech.sabian_native_common.utilities.permissions.Permissions
 import io.flutter.embedding.android.FlutterActivity
 
 class NotificationChannelMethodHandler : IMethodChannelHandler {
 
     override fun execute(payload: MethodChannelPayload) {
-        val permissions = Permissions(payload.context)
-        permissions.proceedIfNotificationPermissionsGranted({
-            if (it.isAnyPermissionDenied) {
-                payload.result.error("PermissionError", payload.context.getString(R.string.please_accept_all_permissions), null)
-                return@proceedIfNotificationPermissionsGranted
+        try {
+
+            val configValue = payload.call.argument<String>("notificationConfig")
+
+            val config = configValue?.fromJSONOrNull<NotificationConfig>()
+                    ?: throw SabianException("No notification config passed")
+
+            val proceed = {
+                notify(config, payload)
             }
-            notify(payload)
-        }, {
-            payload.result.error("PermissionError", it.message, null)
-        })
+            if (!config.canProcessPermissions) {
+                proceed.invoke()
+                return
+            }
+            val permissions = Permissions(payload.context)
+            permissions.proceedIfNotificationPermissionsGranted({
+                if (it.isAnyPermissionDenied) {
+                    payload.result.error(Config.PERMISSIONS_ERROR_CODE, payload.context.getString(R.string.please_accept_all_permissions), null)
+                    return@proceedIfNotificationPermissionsGranted
+                }
+                proceed.invoke()
+            }, {
+                payload.result.error(Config.PERMISSIONS_ERROR_CODE, it.message, null)
+            })
+        } catch (e: Throwable) {
+            e.printStackTrace()
+            payload.result.error(Config.NOTIFICATION_ERROR_CODE, e.message, null)
+        }
     }
 
-    private fun notify(payload: MethodChannelPayload) {
-        val configValue = payload.call.argument<String>("notificationConfig")
-        val config = configValue?.fromJSONOrNull<NotificationConfig>()
-        if (config == null) {
-            payload.result.error(Config.ERROR_CODE, "No notification config passed", null)
-            return
-        }
+    private fun notify(config: NotificationConfig, payload: MethodChannelPayload) {
         val notifier = Notifier(payload.context, config.ID)
         config.channel?.let {
             notifier.channelID = it

@@ -59,7 +59,7 @@ class SabianPermissionsManager {
     
     private var _permissions : [SPPermissions.Permission] {
         get{
-            return permissions.map { return $0.permission }
+            return permissions.compactMap { return $0.permission }
         }
     }
     
@@ -69,15 +69,22 @@ class SabianPermissionsManager {
         self.context = context
     }
     
-    func needsToShow() -> Bool {
-        return permissions.contains(where: { p in
-            !p.permission.authorized
-        })
+    var needsToShow : Bool {
+        get {
+            return permissions.contains(where: { p in
+                let isAuthorized = p.permission?.authorized ?? true
+                return !isAuthorized
+            })
+        }
     }
     
     
-    
-    func show(){
+    func show(checkNeedsToShow : Bool  = true){
+        if checkNeedsToShow && self.needsToShow != true {
+            self.delegate?.onFinished(permissions: permissions)
+            return
+        }
+        
         if self.needsDialog {
             showDialog()
         }else{
@@ -118,12 +125,12 @@ class SabianPermissionsManager {
 
 extension SabianPermissionsManager : SPPermissionsDelegate {
     func didHidePermissions(_ permissions: [SPPermissions.Permission]) {
-        delegate?.onFinished(permissions: permissions.map{ return $0.sabianType })
+        delegate?.onFinished(permissions: permissions.compactMap{ return $0.sabianType })
     }
     func didAllowPermission(_ permission: SPPermissions.Permission) {
-        delegate?.onAllowed(permission: permission.sabianType)
+        delegate?.onAllowed(permission: permission.sabianType!)
     }
     func didDeniedPermission(_ permission: SPPermissions.Permission) {
-        delegate?.onDenied(permission: permission.sabianType)
+        delegate?.onDenied(permission: permission.sabianType!)
     }
 }

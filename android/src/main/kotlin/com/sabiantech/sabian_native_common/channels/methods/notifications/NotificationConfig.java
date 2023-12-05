@@ -22,4 +22,6 @@ public class NotificationConfig {
     public boolean isBig = true;
 
     public int progress;
+
+    public boolean canProcessPermissions = true;
 }

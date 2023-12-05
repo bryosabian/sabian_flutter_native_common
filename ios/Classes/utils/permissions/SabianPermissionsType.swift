@@ -9,44 +9,38 @@ import Foundation
 import SPPermissions
 
 
-enum SabianPermissionsType {
-    case notification
-    case photoLibrary
-    case camera
-    case unknown
+enum SabianPermissionsType : String,CaseIterable {
+    case notification = "Notification"
+    case photoLibrary = "Photo Library"
+    case camera = "Camera"
+    case unknown = "Unknown"
     
-    var permission : SPPermissions.Permission {
-        switch self {
-        case .camera:
-            return .camera
-        case .notification:
-            return .notification
-        case .photoLibrary:
-            return .photoLibrary
-        case .unknown:
-            return .init()
-        }
+    var name : String{
+        return self.rawValue
+    }
+    
+    var permission : SPPermissions.Permission? {
+        return SabianNativePermissionsList.getPermission(self.name)
     }
     
     var isGranted : Bool {
-        return self.permission.authorized
+        if let permission = self.permission {
+            return permission.authorized
+        }else{
+            return true
+        }
     }
 }
 
 extension SPPermissions.Permission {
-    var sabianType : SabianPermissionsType {
-        get{
-            switch self {
-            case .camera:
-                return .camera
-            case .notification:
-                return .notification
-            case .photoLibrary:
-                return .photoLibrary
-            default:
-                return .unknown
+    var sabianType : SabianPermissionsType? {
+        let key = self.type.name
+        for per in SabianPermissionsType.allCases {
+            if per.name == key {
+                return per
             }
         }
+        return nil
     }
 }
 

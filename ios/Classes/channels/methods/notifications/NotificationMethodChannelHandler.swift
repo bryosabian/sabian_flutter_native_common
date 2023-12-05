@@ -21,25 +21,41 @@ class NotificationMethodChannelHandler : IMethodChannelHandler {
         
         self.lastPayload = payload
         
+        var notificationConfig : NotificationConfig
+        
+        if let configValue : String = payload.call.argument("notificationConfig"),let notConfig = NotificationConfig(fromJson: configValue) {
+            notificationConfig = notConfig
+            self.manager?.notify(body: notConfig.toContent)
+            var map = Dictionary<String,Any>()
+            map["status"] = "success"
+            payload.result(map)
+        }else{
+            payload.result(SabianException("No notificaiton passed").toFlutterError)
+            return
+        }
+        
+        let proceed = { [unowned self] in
+            self.manager = SabianUserNotificationsManager(delegate: self)
+            self.manager?.notify(body: notificationConfig.toContent)
+            var map = Dictionary<String,Any>()
+            map["status"] = "success"
+            payload.result(map)
+        }
+        
+        let canProcesPermissions = notificationConfig.canProcessPermissions ?? true
+        if(!canProcesPermissions){
+            proceed()
+            return
+        }
+        
         self.permissions = SabianPermissions(context: payload.controller!)
         
-        self.permissions?.proceedIfGranted(SabianPermissions.notificationPermissions, { [unowned self] rationale in
-            
+        self.permissions?.proceedIfGranted(SabianPermissions.notificationPermissions, { rationale in
             if rationale.isAnyPermissionDenied {
                 payload.result(SabianException("Please accept all permissions").toFlutterError)
                 return
             }
-            
-            self.manager = SabianUserNotificationsManager(delegate: self)
-            
-            if let configValue : String = payload.call.argument("notificationConfig"),let notConfig = NotificationConfig(fromJson: configValue) {
-                self.manager?.notify(body: notConfig.toContent)
-                var map = Dictionary<String,Any>()
-                map["status"] = "success"
-                payload.result(map)
-            }else{
-                payload.result(SabianException("No notificaiton passed").toFlutterError)
-            }
+            proceed()
         })
         
     }
@@ -49,7 +65,7 @@ class NotificationMethodChannelHandler : IMethodChannelHandler {
         self.lastPayload = nil
         self.manager = nil
     }
-   
+    
 }
 
 extension NotificationMethodChannelHandler : SabianUserNotificationsManagerDelegate {

@@ -82,7 +82,9 @@ class SabianUserNotificationsManager: NSObject {
     
     func canNotify() -> Bool {
         
-        let notificationIsEnabledOnLibrary = SPPermissions.Permission.notification.authorized
+        let notificationIsEnabledOnLibrary =
+        SabianPermissionsType.notification.isGranted
+        //SPPermissions.Permission.notification.authorized
         
         let notificationIsEnabledOnSettings = settings != nil && settings!.authorizationStatus == .authorized
         

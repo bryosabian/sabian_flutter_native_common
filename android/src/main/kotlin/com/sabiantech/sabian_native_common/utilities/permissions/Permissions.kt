@@ -14,6 +14,8 @@ import com.sabiantech.sabian_native_common.structures.SabianException
 
 class Permissions(private val context: Context) {
 
+
+
     fun request(
             permissions: Array<String>,
             onProceed: (PermissionRationale) -> Unit,
@@ -134,6 +136,9 @@ class Permissions(private val context: Context) {
 
 
     companion object {
+
+        const val PERMISSIONS_ERROR_CODE = "PermissionsError"
+
         @JvmStatic
         val barcodePermissions: List<String>
             get() {

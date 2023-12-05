@@ -1,13 +1,12 @@
 include ':app'
-
-include ':Libs:imagepicker'
-
-def libFolder = new File('/Users/sweetpea/Desktop/Sabian/Projects/Android/Libs/')
-assert libFolder.exists()
-
-def image_picker_file = new File(libFolder,"imagepicker/")
-assert image_picker_file.exists() , "Image picker file does not exist"
-project(':Libs:imagepicker').projectDir = image_picker_file
+//include ':libs:imagepicker'
+//
+//def libFolder = new File('/Users/sweetpea/Desktop/Sabian/Projects/Android/Libs/')
+//assert libFolder.exists()
+//
+//def image_picker_file = new File(libFolder,"imagepicker/")
+//assert image_picker_file.exists() , "Image picker file does not exist"
+//project(':libs:imagepicker').projectDir = image_picker_file
 
 def localPropertiesFile = new File(rootProject.projectDir, "local.properties")
 def properties = new Properties()

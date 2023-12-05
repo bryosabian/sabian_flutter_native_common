@@ -34,12 +34,19 @@ target 'Runner' do
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   
+#  pod 'SPPermissions/Camera'
+#  pod 'SPPermissions/PhotoLibrary'
+#  pod 'SPPermissions/Notification'
+  
+  #Add all permissions related dependancies here using SPPermissions/
+  #More see https://cocoapods.org/pods/SPPermissions
   
   target 'RunnerTests' do
     inherit! :search_paths
   end
   
 end
+
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|

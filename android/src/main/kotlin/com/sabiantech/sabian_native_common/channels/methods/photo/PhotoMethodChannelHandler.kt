@@ -5,17 +5,18 @@ import android.app.Activity
 import android.content.Context
 import android.net.Uri
 import com.sabiantech.sabian_native_common.R
-import com.sabiantech.sabian_native_common.Config
 import com.sabiantech.sabian_native_common.channels.methods.IMethodChannelHandler
+import com.sabiantech.sabian_native_common.channels.methods.MediaChannelHandler.Companion.MEDIA_ERROR_CODE
 import com.sabiantech.sabian_native_common.channels.methods.MethodChannelPayload
 import com.sabiantech.sabian_native_common.channels.utils.ActivityAwareImpl
 import com.sabiantech.sabian_native_common.events.LoaderEvent
+import com.sabiantech.sabian_native_common.extensions.fromJSONOrNull
 import com.sabiantech.sabian_native_common.extensions.toBitmap
 import com.sabiantech.sabian_native_common.extensions.toBytes
 import com.sabiantech.sabian_native_common.structures.Loader
 import com.sabiantech.sabian_native_common.structures.SabianException
 import com.sabiantech.sabian_native_common.utilities.media.MediaActivity
-import io.flutter.embedding.android.FlutterActivity
+import com.sabiantech.sabian_native_common.utilities.permissions.Permissions
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.CoroutineScope
@@ -23,7 +24,6 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
@@ -34,16 +34,42 @@ class PhotoMethodChannelHandler(private val activityAwareImpl: ActivityAwareImpl
 
     override fun execute(payload: MethodChannelPayload) {
         try {
+
             val activity = currentActivity as? MediaActivity
                     ?: throw SabianException("Activity does not implement MediaActivity")
-            activity.takePicture(101, { u, _ ->
-                encode(activity, u, payload.result)
-            }, {
-                payload.result.error("Fuck off", it.message, null)
+
+            val configValue = payload.call.argument<String>("photoConfig")
+
+            val photoConfig = configValue?.fromJSONOrNull<PhotoConfig>()
+
+            val canProcessPermissions = photoConfig?.canProcessPermissions ?: true
+
+            val proceed = {
+                activity.takePicture(101, { u, _ ->
+                    encode(activity, u, payload.result)
+                }, {
+                    payload.result.error(MEDIA_ERROR_CODE, it.message, null)
+                })
+            }
+
+            if (!canProcessPermissions) {
+                proceed.invoke()
+                return
+            }
+
+            val permissions = Permissions(activity)
+
+            permissions.proceedIfPhotoPermissionsGranted({
+                if (it.isAnyPermissionDenied) {
+                    payload.result.error(Permissions.PERMISSIONS_ERROR_CODE, activity.getString(R.string.please_accept_all_permissions), null)
+                    return@proceedIfPhotoPermissionsGranted
+                }
+                proceed.invoke()
             })
+
         } catch (e: Throwable) {
             e.printStackTrace()
-            payload.result.error("MediaError", e.message, null)
+            payload.result.error(MEDIA_ERROR_CODE, e.message, null)
         }
     }
 
@@ -57,7 +83,6 @@ class PhotoMethodChannelHandler(private val activityAwareImpl: ActivityAwareImpl
         var error: Throwable? = null
         val job: Deferred<ByteArray?> = async(Dispatchers.IO) {
             try {
-                delay(3000)
                 val bmp = uri.toBitmap(context)
                 val bytes = bmp.toBytes()
                 bytes

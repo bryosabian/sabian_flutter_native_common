@@ -3,10 +3,9 @@ package com.sabiantech.sabian_native_common.channels.methods.photo
 import android.app.Activity
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import com.sabiantech.sabian_native_common.R
-import com.sabiantech.sabian_native_common.Config
 import com.sabiantech.sabian_native_common.channels.methods.IMethodChannelHandler
+import com.sabiantech.sabian_native_common.channels.methods.MediaChannelHandler
 import com.sabiantech.sabian_native_common.channels.methods.MethodChannelPayload
 import com.sabiantech.sabian_native_common.channels.utils.ActivityAwareImpl
 import com.sabiantech.sabian_native_common.events.LoaderEvent
@@ -16,16 +15,14 @@ import com.sabiantech.sabian_native_common.extensions.toBytes
 import com.sabiantech.sabian_native_common.structures.Loader
 import com.sabiantech.sabian_native_common.structures.SabianException
 import com.sabiantech.sabian_native_common.utilities.media.MediaActivity
-import io.flutter.embedding.android.FlutterActivity
+import com.sabiantech.sabian_native_common.utilities.permissions.Permissions
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
-import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
@@ -38,19 +35,38 @@ class GalleryMethodChannelHandler(private val activityAwareImpl: ActivityAwareIm
         get() = SupervisorJob() + Dispatchers.Main
 
     override fun execute(payload: MethodChannelPayload) {
-        val configValue = payload.call.argument<String>("photoConfig")
-        val photoConfig = configValue?.fromJSONOrNull<PhotoConfig>()
         try {
             val activity = currentActivity as? MediaActivity
                     ?: throw SabianException("Activity does not implement MediaActivity")
-            activity.choosePicture({
-                encode(activity, it, payload.result)
-            }, photoConfig, {
-                payload.result.error("MediaError", it.message, null)
+            val configValue = payload.call.argument<String>("photoConfig")
+            val photoConfig = configValue?.fromJSONOrNull<PhotoConfig>()
+            val canProcessPermissions = photoConfig?.canProcessPermissions ?: true
+            val proceed = {
+                activity.choosePicture({
+                    encode(activity, it, payload.result)
+                }, photoConfig, {
+                    payload.result.error(MediaChannelHandler.MEDIA_ERROR_CODE, it.message, null)
+                })
+            }
+
+            if (!canProcessPermissions) {
+                proceed.invoke()
+                return
+            }
+
+            val permissions = Permissions(activity)
+
+            permissions.proceedIfPhotoPermissionsGranted({
+                if (it.isAnyPermissionDenied) {
+                    payload.result.error(Permissions.PERMISSIONS_ERROR_CODE, activity.getString(R.string.please_accept_all_permissions), null)
+                    return@proceedIfPhotoPermissionsGranted
+                }
+                proceed.invoke()
             })
+
         } catch (e: Throwable) {
             e.printStackTrace()
-            payload.result.error("MediaError", e.message, null)
+            payload.result.error(MediaChannelHandler.MEDIA_ERROR_CODE, e.message, null)
         }
     }
 
@@ -63,13 +79,11 @@ class GalleryMethodChannelHandler(private val activityAwareImpl: ActivityAwareIm
         var error: Throwable? = null
         val job: Deferred<List<ByteArray>?> = async(Dispatchers.IO) {
             try {
-                delay(3000)
                 val list = uris.map { uri ->
                     val bmp = uri.toBitmap(context)
                     val bytes = bmp.toBytes()
                     bytes
                 }
-                Log.e("GMCH", "Found ${list.size} passed")
                 list
             } catch (e: Throwable) {
                 e.printStackTrace()
@@ -81,7 +95,7 @@ class GalleryMethodChannelHandler(private val activityAwareImpl: ActivityAwareIm
             val arr = job.await()
             loaderEvent.raise(Loader(isHidden = true))
             error?.let {
-                result.error("MediaError", it.message, "")
+                result.error(MediaChannelHandler.MEDIA_ERROR_CODE, it.message, "")
             } ?: kotlin.run {
                 result.success(mapOf("status" to "success", "data" to arr))
             }

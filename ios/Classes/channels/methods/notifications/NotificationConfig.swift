@@ -31,6 +31,8 @@ struct NotificationConfig : SabianCodable {
 
     var progress : Int?
     
+    var canProcessPermissions : Bool? = true
+    
     init(){
         
     }
@@ -60,6 +62,8 @@ struct NotificationConfig : SabianCodable {
         isBig = copy.isBig
 
         progress = copy.progress
+        
+        canProcessPermissions = copy.canProcessPermissions
     }
 }
 
@@ -89,6 +93,8 @@ extension NotificationConfig {
         case isBig
 
         case progress
+        
+        case canProcessPermissions
     }
 }
 
