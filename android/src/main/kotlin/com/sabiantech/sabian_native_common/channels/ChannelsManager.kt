@@ -2,7 +2,7 @@ package com.sabiantech.sabian_native_common.channels
 
 
 import com.sabiantech.sabian_native_common.channels.events.EventChannelHandler
-import com.sabiantech.sabian_native_common.channels.methods.ExampleChannelHandler
+import com.sabiantech.sabian_native_common.channels.methods.DeviceChannelHandler
 import com.sabiantech.sabian_native_common.channels.methods.MediaChannelHandler
 import com.sabiantech.sabian_native_common.channels.methods.NotificationChannelHandler
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -13,9 +13,8 @@ class ChannelsManager : ActivityAware {
     private val methodChannelHandlers: Map<String, IChannelHandler<*, *>> by lazy {
         mapOf("com.sabian_common_native.methods.media" to MediaChannelHandler(),
                 "com.sabian_common_native.methods.notifications" to NotificationChannelHandler(),
-                "sabian_native_common" to ExampleChannelHandler()
+                "com.sabian_common_native.methods.device" to DeviceChannelHandler()
         )
-
     }
 
     private val eventChannelHandlers: Map<String, IChannelHandler<*, *>> by lazy {

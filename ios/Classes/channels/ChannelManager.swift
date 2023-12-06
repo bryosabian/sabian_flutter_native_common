@@ -2,7 +2,7 @@
 //  ChannelManager.swift
 //  Runner
 //
-//  Created by Sweet Pea on 23/11/2023.
+//  Created by bryosabian on 23/11/2023.
 //
 
 import Foundation
@@ -22,7 +22,7 @@ class ChannelManager {
     private func initMethods(){
         methodChannelHandlers["com.sabian_common_native.methods.media"] = MediaChannelHandler()
         methodChannelHandlers["com.sabian_common_native.methods.notifications"] = NotificationChannelHandler()
-        methodChannelHandlers["sabian_native_common"] = ExampleChannelHandler()
+        methodChannelHandlers["com.sabian_common_native.methods.device"] = DeviceChannelHandler()
     }
     
     private func configureEvents(payload : ChannelPayload){

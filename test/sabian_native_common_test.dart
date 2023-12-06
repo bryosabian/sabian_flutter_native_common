@@ -1,30 +1,26 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sabian_native_common/sabian_native_common.dart';
-import 'package:sabian_native_common/sabian_native_common_platform_interface.dart';
-import 'package:sabian_native_common/sabian_native_common_method_channel.dart';
-import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:sabian_native_common_plugin_interface/device/sabian_native_common_device_platform.dart';
 
-class MockSabianNativeCommonPlatform
-    with MockPlatformInterfaceMixin
-    implements SabianNativeCommonPlatform {
+class MockSabianNativeCommonDevicePlatform
+    implements SabianNativeCommonDevicePlatform {
   @override
   Future<String?> getPlatformVersion() => Future.value('42');
 }
 
 void main() {
-  final SabianNativeCommonPlatform initialPlatform =
-      SabianNativeCommonPlatform.instance;
+  SabianNativeCommonDevicePlatform.instance =
+      MockSabianNativeCommonDevicePlatform();
 
-  test('$MethodChannelSabianNativeCommon is the default instance', () {
-    expect(initialPlatform, isInstanceOf<MethodChannelSabianNativeCommon>());
+  final SabianNativeCommon initialPlatform = SabianNativeCommon();
+
+  test('$MockSabianNativeCommonDevicePlatform is the default device instance',
+      () {
+    expect(initialPlatform.device,
+        isInstanceOf<MockSabianNativeCommonDevicePlatform>());
   });
 
   test('getPlatformVersion', () async {
-    SabianNativeCommon sabianNativeCommonPlugin = SabianNativeCommon();
-    MockSabianNativeCommonPlatform fakePlatform =
-        MockSabianNativeCommonPlatform();
-    SabianNativeCommonPlatform.instance = fakePlatform;
-
-    expect(await sabianNativeCommonPlugin.platform.getPlatformVersion(), '42');
+    expect(await initialPlatform.device.getPlatformVersion(), '42');
   });
 }

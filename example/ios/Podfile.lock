@@ -15,7 +15,13 @@ PODS:
     - YPImagePicker
   - SPPermissions (7.1.5):
     - SPPermissions/Core (= 7.1.5)
+  - SPPermissions/Camera (7.1.5):
+    - SPPermissions/Core
   - SPPermissions/Core (7.1.5)
+  - SPPermissions/Notification (7.1.5):
+    - SPPermissions/Core
+  - SPPermissions/PhotoLibrary (7.1.5):
+    - SPPermissions/Core
   - sqflite (0.0.3):
     - Flutter
     - FMDB (>= 2.7.5)
@@ -29,6 +35,9 @@ DEPENDENCIES:
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - sabian_native_common (from `.symlinks/plugins/sabian_native_common/ios`)
+  - SPPermissions/Camera
+  - SPPermissions/Notification
+  - SPPermissions/PhotoLibrary
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
 
 SPEC REPOS:
@@ -63,6 +72,6 @@ SPEC CHECKSUMS:
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
   YPImagePicker: 6f410f475bd22fa8cd430495b54d4b2f15865c2d
 
-PODFILE CHECKSUM: d7f281243f01f29060237bd02000f7b1a46b0142
+PODFILE CHECKSUM: 0cbb744e1c3b076769b1c7f0fca67a2d24f4a076
 
 COCOAPODS: 1.14.3

@@ -2,7 +2,7 @@
 //  NotificationContent.swift
 //  Runner
 //
-//  Created by Sweet Pea on 23/11/2023.
+//  Created by bryosabian on 23/11/2023.
 //
 
 import Foundation

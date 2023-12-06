@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sabian_native_common/sabian_native_common.dart';
-import 'package:sabian_native_common/structures/sabian_notification_config.dart';
-import 'package:sabian_native_common/structures/sabian_photo_config.dart';
+import 'package:sabian_native_common/structures/notification_data.dart';
+import 'package:sabian_native_common/structures/photo_data.dart';
 import 'package:sabian_tools/controls/SabianButton.dart';
 import 'package:sabian_tools/modals/progress/SabianProgressModal.dart';
 import 'package:sabian_tools/toast/SabianToast.dart';
@@ -18,12 +18,14 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final _platform = SabianNativeCommon();
 
-  ImageProvider<Object>? memoryImage;
+  ImageProvider<Object>? _memoryImage;
 
-  ImageProvider<Object> assetImage =
+  final ImageProvider<Object> _assetImage =
       const AssetImage("assets/images/cat2.jpeg");
 
-  SabianProgressModal? loader;
+  SabianProgressModal? _loader;
+
+  String? _platformName;
 
   @override
   void initState() {
@@ -39,16 +41,16 @@ class _HomeState extends State<Home> {
 
   void _registerSubs() {
     _platform.media.events.progress.onShow = (payload) {
-      loader = SabianProgressModal(
+      _loader = SabianProgressModal(
           key: "mProgress",
           title: payload.title ?? "Loading",
           message: payload.message);
-      loader?.show(context, isFull: true);
+      _loader?.show(context, isFull: true);
     };
 
     _platform.media.events.progress.onHide = (payload) {
-      if (loader != null) {
-        loader!.close(context);
+      if (_loader != null) {
+        _loader!.close(context);
       }
     };
 
@@ -69,6 +71,12 @@ class _HomeState extends State<Home> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Center(
+                child: Container(
+                    margin: const EdgeInsetsDirectional.symmetric(vertical: 10),
+                    child: Text(
+                      _platformName ?? "",
+                    ))),
+            Center(
                 child: SizedBox(
                     width: 100,
                     height: 100,
@@ -76,7 +84,7 @@ class _HomeState extends State<Home> {
                       borderRadius:
                           const BorderRadius.all(Radius.circular(10.0)),
                       child: Image(
-                        image: memoryImage ?? assetImage,
+                        image: _memoryImage ?? _assetImage,
                         fit: BoxFit.fill,
                       ),
                     ))),
@@ -112,7 +120,18 @@ class _HomeState extends State<Home> {
                       backgroundColor: theme.colorScheme.primary,
                       fontSize: 14,
                       onPressed: () => _notify(context),
-                    )))
+                    ))),
+            FractionallySizedBox(
+                widthFactor: 1,
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: SabianButton(
+                      text: "Get Platform",
+                      textColor: theme.colorScheme.onPrimary,
+                      backgroundColor: theme.colorScheme.primary,
+                      fontSize: 14,
+                      onPressed: () => _getPlatform(),
+                    ))),
           ],
         ),
       ),
@@ -131,7 +150,7 @@ class _HomeState extends State<Home> {
   }
 
   void _choosePicture(BuildContext context) {
-    final config = PhotoConfig()
+    final config = PhotoData()
       ..galleryAlbumName = "Flutter Album"
       ..galleryToolBarTitle = "Choose Photo"
       ..galleryAlbumsTitle = "All Flutter Albums"
@@ -151,7 +170,7 @@ class _HomeState extends State<Home> {
   }
 
   void _notify(BuildContext context) {
-    final config = NotificationConfig()
+    final config = NotificationData()
       ..title = "Flutter Notification"
       ..message = "This is a message from the flutter desk. Watch yourself"
       ..canVibrate = true
@@ -164,9 +183,21 @@ class _HomeState extends State<Home> {
     });
   }
 
+  void _getPlatform() {
+    _platform.device.getPlatformVersion().then((value) {
+      setState(() {
+        _platformName = "Platform : ${value ?? "Unknown"}";
+      });
+    }).onError((error, stackTrace) {
+      setState(() {
+        _platformName = "Unknown";
+      });
+    });
+  }
+
   void setCurrentImage(Uint8List bytes) {
     setState(() {
-      memoryImage = MemoryImage(bytes);
+      _memoryImage = MemoryImage(bytes);
     });
   }
 }

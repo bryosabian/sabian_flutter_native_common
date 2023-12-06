@@ -358,6 +358,13 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  sabian_native_common_plugin_interface:
+    dependency: transitive
+    description:
+      path: "../sabian_native_common_interface"
+      relative: true
+    source: path
+    version: "0.0.1"
   sabian_tools:
     dependency: "direct main"
     description:

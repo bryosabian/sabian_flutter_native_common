@@ -2,7 +2,7 @@
 //  SabianUserNotificationsManagerDelegate.swift
 //  sabian_native_common
 //
-//  Created by Sweet Pea on 01/12/2023.
+//  Created by bryosabian on 01/12/2023.
 //
 
 import Foundation

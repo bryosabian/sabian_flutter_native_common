@@ -2,7 +2,7 @@
 //  SabianNativePermissionsList.swift
 //  sabian_native_common
 //
-//  Created by Sweet Pea on 03/12/2023.
+//  Created by bryosabian on 03/12/2023.
 //
 
 import Foundation
@@ -12,9 +12,9 @@ class SabianNativePermissionsList {
     
     static var permissions : Dictionary<String,SPPermissions.Permission> {
         var permissions = Dictionary<String,SPPermissions.Permission>()
-//        permissions["Camera"] = SPPermissions.Permission.camera
-//        permissions["Notification"] = SPPermissions.Permission.notification
-//        permissions["Photo Library"] = SPPermissions.Permission.photoLibrary
+        permissions["Camera"] = SPPermissions.Permission.camera
+        permissions["Notification"] = SPPermissions.Permission.notification
+        permissions["Photo Library"] = SPPermissions.Permission.photoLibrary
         return permissions
     }
     
