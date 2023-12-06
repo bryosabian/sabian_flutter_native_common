@@ -1,11 +1,12 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:sabian_native_common_plugin_interface/common/sabian_abstract_platform.dart';
 import 'package:sabian_native_common_plugin_interface/events/loader/sabian_native_common_loader_event_channel.dart';
 import 'package:sabian_native_common_plugin_interface/events/sabian_abstract_event_platform.dart';
 import 'package:sabian_native_common_plugin_interface/structures/sabian_progress.dart';
 
 class SabianNativeCommonLoaderEventPlatform
     extends SabianAbstractEventPlatform {
-  static final Object _token = Object();
+  static final Object _token = SabianAbstractPlatform.token;
 
   Function(SabianProgress)? onShow;
 

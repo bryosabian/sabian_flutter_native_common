@@ -1,10 +1,11 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:sabian_native_common_plugin_interface/common/sabian_abstract_platform.dart';
 import 'package:sabian_native_common_plugin_interface/events/error/sabian_native_common_error_event_channel.dart';
 import 'package:sabian_native_common_plugin_interface/events/loader/sabian_native_common_loader_event_platform.dart';
 
 class SabianNativeCommonErrorEventPlatform
     extends SabianNativeCommonLoaderEventPlatform {
-  static final Object _token = Object();
+  static final Object _token = SabianAbstractPlatform.token;
 
   static SabianNativeCommonErrorEventPlatform? _instance;
 

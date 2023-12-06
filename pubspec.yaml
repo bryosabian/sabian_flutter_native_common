@@ -13,7 +13,7 @@ dependencies:
 
   plugin_platform_interface: ^2.0.2
 
-  sabian_native_common_interface:
+  sabian_native_common_plugin_interface:
     path: ./sabian_native_common_interface
 
   #JSON

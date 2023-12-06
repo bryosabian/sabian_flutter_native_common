@@ -5,7 +5,7 @@ import 'package:sabian_native_common_plugin_interface/structures/sabian_notifica
 import 'package:sabian_native_common_plugin_interface/structures/sabian_response_payload.dart';
 
 class SabianNativeCommonNotificationPlatform extends SabianAbstractPlatform {
-  static final Object _token = Object();
+  static final Object _token = SabianAbstractPlatform.token;
 
   static SabianNativeCommonNotificationPlatform? _instance;
 
