@@ -174,6 +174,7 @@ class _HomeState extends State<Home> {
       ..title = "Flutter Notification"
       ..message = "This is a message from the flutter desk. Watch yourself"
       ..canVibrate = true
+      ..canProcessPermissions = true
       ..hasSound = true;
     _platform.notification.notify(config).then((payload) {
       SabianToast("Success ${payload.status}", SabianToastType.success)

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:sabian_native_common_plugin_interface/media/sabian_native_common_media_platform.dart';
-import 'package:sabian_native_common_plugin_interface/structures/sabian_common_native_error.dart';
-import 'package:sabian_native_common_plugin_interface/structures/sabian_photo_config.dart';
+import 'package:sabian_native_common_interface/media/sabian_native_common_media_platform.dart';
+import 'package:sabian_native_common_interface/structures/sabian_common_native_error.dart';
+import 'package:sabian_native_common_interface/structures/sabian_photo_config.dart';
 
 import '../structures/sabian_media_response_payload.dart';
 

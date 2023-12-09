@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:sabian_native_common_plugin_interface/device/sabian_native_common_device_platform.dart';
-import 'package:sabian_native_common_plugin_interface/structures/sabian_common_native_error.dart';
+import 'package:sabian_native_common_interface/device/sabian_native_common_device_platform.dart';
+import 'package:sabian_native_common_interface/structures/sabian_common_native_error.dart';
 
 class SabianNativeCommonDeviceMethodChannel
     extends SabianNativeCommonDevicePlatform {

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
-import 'package:sabian_native_common_plugin_interface/structures/sabian_with_permission.dart';
+import 'package:sabian_native_common_interface/structures/sabian_with_permission.dart';
 
 part '../generated/structures/sabian_photo_config.g.dart';
 

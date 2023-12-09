@@ -1,6 +1,6 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-import 'package:sabian_native_common_plugin_interface/common/sabian_abstract_platform.dart';
-import 'package:sabian_native_common_plugin_interface/device/sabian_native_common_device_method_channel.dart';
+import 'package:sabian_native_common_interface/common/sabian_abstract_platform.dart';
+import 'package:sabian_native_common_interface/device/sabian_native_common_device_method_channel.dart';
 
 class SabianNativeCommonDevicePlatform extends SabianAbstractPlatform {
   static final Object _token = SabianAbstractPlatform.token;

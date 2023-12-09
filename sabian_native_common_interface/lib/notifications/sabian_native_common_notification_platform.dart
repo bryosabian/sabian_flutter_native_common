@@ -1,8 +1,8 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-import 'package:sabian_native_common_plugin_interface/common/sabian_abstract_platform.dart';
-import 'package:sabian_native_common_plugin_interface/notifications/sabian_native_common_notification_method_channel.dart';
-import 'package:sabian_native_common_plugin_interface/structures/sabian_notification_config.dart';
-import 'package:sabian_native_common_plugin_interface/structures/sabian_response_payload.dart';
+import 'package:sabian_native_common_interface/common/sabian_abstract_platform.dart';
+import 'package:sabian_native_common_interface/notifications/sabian_native_common_notification_method_channel.dart';
+import 'package:sabian_native_common_interface/structures/sabian_notification_config.dart';
+import 'package:sabian_native_common_interface/structures/sabian_response_payload.dart';
 
 class SabianNativeCommonNotificationPlatform extends SabianAbstractPlatform {
   static final Object _token = SabianAbstractPlatform.token;

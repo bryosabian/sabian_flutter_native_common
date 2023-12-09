@@ -1,8 +1,8 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-import 'package:sabian_native_common_plugin_interface/common/sabian_abstract_platform.dart';
-import 'package:sabian_native_common_plugin_interface/events/sabian_with_events.dart';
-import 'package:sabian_native_common_plugin_interface/media/sabian_native_common_media_method_channel.dart';
-import 'package:sabian_native_common_plugin_interface/structures/sabian_photo_config.dart';
+import 'package:sabian_native_common_interface/common/sabian_abstract_platform.dart';
+import 'package:sabian_native_common_interface/events/sabian_with_events.dart';
+import 'package:sabian_native_common_interface/media/sabian_native_common_media_method_channel.dart';
+import 'package:sabian_native_common_interface/structures/sabian_photo_config.dart';
 
 import '../structures/sabian_media_response_payload.dart';
 

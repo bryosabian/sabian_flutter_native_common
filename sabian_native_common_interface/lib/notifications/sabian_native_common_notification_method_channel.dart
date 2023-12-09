@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sabian_native_common_plugin_interface/notifications/sabian_native_common_notification_platform.dart';
-import 'package:sabian_native_common_plugin_interface/structures/sabian_common_native_error.dart';
-import 'package:sabian_native_common_plugin_interface/structures/sabian_notification_config.dart';
-import 'package:sabian_native_common_plugin_interface/structures/sabian_response_payload.dart';
+import 'package:sabian_native_common_interface/notifications/sabian_native_common_notification_platform.dart';
+import 'package:sabian_native_common_interface/structures/sabian_common_native_error.dart';
+import 'package:sabian_native_common_interface/structures/sabian_notification_config.dart';
+import 'package:sabian_native_common_interface/structures/sabian_response_payload.dart';
 
 class SabianNativeCommonNotificationMethodChannel
     extends SabianNativeCommonNotificationPlatform {

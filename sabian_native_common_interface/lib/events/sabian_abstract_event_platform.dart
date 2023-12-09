@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:sabian_native_common_plugin_interface/common/sabian_abstract_platform.dart';
+import 'package:sabian_native_common_interface/common/sabian_abstract_platform.dart';
 
 class SabianAbstractEventPlatform extends SabianAbstractPlatform {
   final String _channel;

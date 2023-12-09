@@ -9,7 +9,7 @@ PODS:
     - Flutter
     - FlutterMacOS
   - PryntTrimmerView (4.0.2)
-  - sabian_native_common (0.0.1):
+  - sabian_native_common_ios (0.0.1):
     - Flutter
     - SPPermissions
     - YPImagePicker
@@ -34,7 +34,7 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
-  - sabian_native_common (from `.symlinks/plugins/sabian_native_common/ios`)
+  - sabian_native_common_ios (from `.symlinks/plugins/sabian_native_common_ios/ios`)
   - SPPermissions/Camera
   - SPPermissions/Notification
   - SPPermissions/PhotoLibrary
@@ -55,8 +55,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
-  sabian_native_common:
-    :path: ".symlinks/plugins/sabian_native_common/ios"
+  sabian_native_common_ios:
+    :path: ".symlinks/plugins/sabian_native_common_ios/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
 
@@ -66,7 +66,7 @@ SPEC CHECKSUMS:
   integration_test: 13825b8a9334a850581300559b8839134b124670
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   PryntTrimmerView: 6a43cc90df5d99addeabd33d4ba09b1365322130
-  sabian_native_common: ccf79f219a822cfea0de165f368e1dca2ac27dca
+  sabian_native_common_ios: cb2db11b17ce96283c29c0536375d6a0fe56f169
   SPPermissions: c63ac1132badad39917de03a3c9dc2429ace94be
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4

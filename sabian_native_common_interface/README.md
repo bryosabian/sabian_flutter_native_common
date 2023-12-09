@@ -1,3 +1,3 @@
-#### The SabianNativeCommonPlugInInterface
+#### sabian_native_common_interface
 
-The plug in interface that can be used to integrate other plug in platforms apart from Android and IOS
+The plugin platform interface of the sabian_native_common plugin that can be used to integrate other plugin platforms apart from Android and IOS

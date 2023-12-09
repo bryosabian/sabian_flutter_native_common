@@ -250,6 +250,7 @@ class _HomeState extends State<Home> {
       ..title = "Flutter Notification"
       ..message = "This is a message from the flutter desk. Watch yourself"
       ..canVibrate = true
+      ..canProcessPermissions = true
       ..hasSound = true;
     _platform.notification.notify(config).then((payload) {
       SabianToast("Success ${payload.status}", SabianToastType.success)
@@ -372,7 +373,28 @@ import com.sabiantech.sabian_native_common.utilities.media.MediaActivity
 class MainActivity : MediaActivity()
 ```
 
-Build the flutter project. You are all set for Android
+Build/Run the flutter project. You are all set for Android
+
+### Gradle Error Fixes
+In case you can't build the Android project due to this error 'plugin with id sabian_native_common not found', open the android/settings.gradle, add the following script to manually include all project android based plugins in your project:
+```groovy
+def flutterProjectRoot = rootProject.projectDir.parentFile.toPath()
+
+def plugins = new Properties()
+def pluginsFile = new File(flutterProjectRoot.toFile(), '.flutter-plugins')
+
+if (pluginsFile.exists()) {
+  pluginsFile.withReader('UTF-8') { reader -> plugins.load(reader) }
+}
+
+plugins.each { name, path ->
+  def pluginDirectory = flutterProjectRoot.resolve(path).resolve('android').toFile()
+  include ":$name"
+  project(":$name").projectDir = pluginDirectory
+}
+```
+
+Build/run the Flutter project again
 
 # IOS
 
@@ -415,7 +437,7 @@ end
 ```
 
 #### Library permissions
-Under the sabian_native_common/ios directory, open ios/Classes folder and click SabianNativePermissionsList.swift and uncomment the permissions you need based on the specified permissions above
+Under the sabian_native_common_ios/ios directory, open Classes folder and click SabianNativePermissionsList.swift and uncomment the permissions you need based on the specified permissions above
 e.g
 
 ```swift
@@ -451,7 +473,19 @@ Privacy - Photo Library Usage Description
 Privacy - Media Library Usage Description
 ```
 
-Close xcode and build the flutter project
+Alternatively, you can edit the info.plist file directly and add the permissions as shown
+```xml
+<key>NSCameraUsageDescription</key>
+<string>$(PRODUCT_NAME) We use camera images to personalize your profile details. These details are not shared with any other party</string>
+
+<key>NSPhotoLibraryUsageDescription</key>
+<string>$(PRODUCT_NAME) uses this feature to further personalize your profile. These details are not shared with any other party</string>
+
+<key>NSAppleMusicUsageDescription</key>
+<string>$(PRODUCT_NAME) uses this feature to further personalize your profile. These details are not shared with any other party</string>
+```
+
+Close xcode and build/run the flutter project
 
 You're all set for IOS
 

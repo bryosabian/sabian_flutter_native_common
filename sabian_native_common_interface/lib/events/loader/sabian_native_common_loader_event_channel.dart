@@ -1,10 +1,12 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-import 'package:sabian_native_common_plugin_interface/events/loader/sabian_native_common_loader_event_platform.dart';
-import 'package:sabian_native_common_plugin_interface/structures/sabian_progress.dart';
+import 'package:sabian_native_common_interface/common/sabian_abstract_platform.dart';
+import 'package:sabian_native_common_interface/events/loader/sabian_native_common_loader_event_platform.dart';
+import 'package:sabian_native_common_interface/structures/sabian_progress.dart';
 
 class SabianNativeCommonLoaderEventChannel
     extends SabianNativeCommonLoaderEventPlatform {
-  static final Object _token = Object();
+
+  static final Object _token = SabianAbstractPlatform.token;
 
   static const _CHANNEL = 'com.sabian_common_native.events.loader';
 

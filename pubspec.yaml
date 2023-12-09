@@ -13,8 +13,14 @@ dependencies:
 
   plugin_platform_interface: ^2.0.2
 
-  sabian_native_common_plugin_interface:
-    path: ./sabian_native_common_interface
+  sabian_native_common_interface:
+    path: sabian_native_common_interface
+
+  sabian_native_common_android:
+    path: sabian_native_common_android
+
+  sabian_native_common_ios:
+    path: sabian_native_common_ios
 
   #JSON
   json_annotation: ^4.8.1
@@ -46,10 +52,9 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.sabiantech.sabian_native_common
-        pluginClass: SabianNativeCommonPlugin
+        default_package: sabian_native_common_android
       ios:
-        pluginClass: SabianNativeCommonPlugin
+        default_package: sabian_native_common_ios
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
